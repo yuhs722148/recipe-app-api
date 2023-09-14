@@ -10,20 +10,22 @@ from django.core.management import call_command
 from django.db.utils import OperationalError
 from django.test import SimpleTestCase
 
+
 # Mocking the 'check' method to simulate the response
 @patch('core.management.commands.wait_for_db.Command.check')
 class CommandTests(SimpleTestCase):
     """Test commands."""
-    # Because we add @patch, we have to add a new argument to catch the return value
+    # Because we add @patch,
+    # we have to add a new argument to catch the return value
     def test_wait_for_db_ready(self, patched_check):
         """Test waiting for database if databse ready."""
         patched_check.return_value = True
         # Call 'wait_for_db' command, execute the code inside wait_for_db.py
         call_command('wait_for_db')
-        
+
         patched_check.assert_called_once_with(databases=['default'])
 
-    @patch('time.sleep')    
+    @patch('time.sleep')
     def test_wait_for_db_delay(self, patched_sleep, patched_check):
         """Test waiting for database when getting OperationalError."""
         # 因為PostgreSQL在初始化階段還不能接受連線，所以會先出現psycopg2錯誤
