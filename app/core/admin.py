@@ -30,7 +30,7 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            #classes is to change the CSS of the page, it's optional
+            # classes is to change the CSS of the page, it's optional
             'fields': (
                 'email',
                 'password1',

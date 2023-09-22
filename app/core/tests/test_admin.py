@@ -9,7 +9,7 @@ from django.test import Client
 
 class AdminSiteTests(TestCase):
     """Tests for Django admin."""
-    #一般Python會用底線做為method的命名模式，但測試的setUp不知道為何就是這樣
+    # 一般Python會用底線做為method的命名模式，但測試的setUp不知道為何就是這樣
     def setUp(self):
         """Create user and client."""
         self.client = Client()
