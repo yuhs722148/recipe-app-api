@@ -83,7 +83,7 @@ class PrivateRecipeAPITests(TestCase):
         """Test list of recipes is limited to authenticated user."""
         other_user = create_user(email='other@example.com', password='test123')
         create_recipe(user=other_user)
-        create_recipe(user=other_user)
+        create_recipe(user=self.user)
 
         res = self.client.get(RECIPES_URL)
 
@@ -149,8 +149,8 @@ class PrivateRecipeAPITests(TestCase):
             'title': 'New recipe title',
             'link': 'http://example.com/new-recipe.pdf',
             'description': 'New recipe description.',
-            'time-minutes': 10,
-            'price': Decimal('2.50')
+            'time_minutes': 10,
+            'price': Decimal('2.50'),
         }
         url = detail_url(recipe.id)
         res = self.client.put(url, payload)
@@ -161,8 +161,8 @@ class PrivateRecipeAPITests(TestCase):
             self.assertEqual(getattr(recipe, k), v)
         self.assertEqual(recipe.user, self.user)
 
-    def test_update_user_return_error(self):
-        """Test changing the recipe user results in an error"""
+    def test_update_user_returns_error(self):
+        """Test changing the recipe user results in an error."""
         new_user = create_user(email='user2@example.com', password='test123')
         recipe = create_recipe(user=self.user)
 
@@ -174,7 +174,7 @@ class PrivateRecipeAPITests(TestCase):
         self.assertEqual(recipe.user, self.user)
 
     def test_delete_recipe(self):
-        """Test deleting a recipe sucessful."""
+        """Test deleting a recipe successful."""
         recipe = create_recipe(user=self.user)
 
         url = detail_url(recipe.id)
@@ -184,7 +184,7 @@ class PrivateRecipeAPITests(TestCase):
         self.assertFalse(Recipe.objects.filter(id=recipe.id).exists())
 
     def test_recipe_other_users_recipe_error(self):
-        """Test trying to delete another user recipe gives error."""
+        """Test trying to delete another users recipe gives error."""
         new_user = create_user(email='user2@example.com', password='test123')
         recipe = create_recipe(user=new_user)
 
