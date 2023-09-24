@@ -241,7 +241,7 @@ class PrivateRecipeAPITests(TestCase):
             exists = recipe.tags.filter(
                 name=tag['name'],
                 user=self.user,
-            ).exists
+            ).exists()
             self.assertTrue(exists)
 
     def test_create_tag_on_update(self):
@@ -274,7 +274,7 @@ class PrivateRecipeAPITests(TestCase):
     def test_clear_recipe_tags(self):
         """Test clearing a recipes tags."""
         tag = Tag.objects.create(user=self.user, name='Dessert')
-        recipe = Recipe.objects.create(user=self.user)
+        recipe = create_recipe(user=self.user)
         recipe.tags.add(tag)
 
         payload = {'tags': []}
