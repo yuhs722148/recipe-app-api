@@ -46,6 +46,7 @@ class BaseRecipeAttrViewSet(mixins.DestroyModelMixin,
     """Base viewset for recipe attributes."""
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
+
     def get_queryset(self):
         """Filter queryset to authenticated use."""
         return self.queryset.filter(user=self.request.user).order_by('-name')
