@@ -265,7 +265,8 @@ class PrivateRecipeAPITests(TestCase):
         tag_lunch = Tag.objects.create(user=self.user, name='Lunch')
         payload = {'tags': [{'name': 'Lunch'}]}
         url = detail_url(recipe.id)
-        res = self.client.patch(url, payload, format='json')  # Change lunch to breakfast
+        # Change lunch to breakfast
+        res = self.client.patch(url, payload, format='json')
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertIn(tag_lunch, recipe.tags.all())
