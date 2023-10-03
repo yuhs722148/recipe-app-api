@@ -6,7 +6,17 @@ from rest_framework import serializers
 from core.models import (
     Recipe,
     Tag,
+    Ingredient,
 )
+
+
+class IngredientSerializer(serializers.ModelSerializer):
+    """Serializer for ingredients."""
+
+    class Meta:
+        model = Ingredient
+        fields = ['id', 'name']
+        read_only_field = ['id']
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -39,7 +49,8 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         """Create a recipe"""
-        tags = validated_data.pop('tags', [])  # Remove tags before create a recipe.
+        tags = validated_data.pop(
+            'tags', [])  # Remove tags before create a recipe.
         recipe = Recipe.objects.create(**validated_data)
         self._get_or_create_tags(tags, recipe)
 
@@ -58,6 +69,7 @@ class RecipeSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
+
 
 class RecipeDetailSerializer(RecipeSerializer):
     """Serializer for recipe detail view."""

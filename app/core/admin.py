@@ -48,3 +48,4 @@ admin.site.register(models.User, UserAdmin)
 #                                ^^^^^^^^^確保有使用上面定義的UserAdmin
 admin.site.register(models.Recipe)
 admin.site.register(models.Tag)
+admin.site.register(models.Ingredient)
