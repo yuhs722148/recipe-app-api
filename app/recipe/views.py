@@ -1,12 +1,13 @@
 """
-Views for recipe APIs.
+Views for the recipe APIs.
 """
-from drf_spectacular.utils import(
+from drf_spectacular.utils import (
     extend_schema_view,
     extend_schema,
     OpenApiParameter,
     OpenApiTypes,
 )
+
 from rest_framework import (
     viewsets,
     mixins,
@@ -39,7 +40,7 @@ from recipe import serializers
                 description='Comma separated list of ingredient IDs to filter'
             )
         ]
-    )
+    ),
 )
 
 class RecipeViewSet(viewsets.ModelViewSet):
@@ -104,7 +105,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
                 description='Filter by items assigned to recipes.'
             )
         ]
-    )
+    ),
 )
 class BaseRecipeAttrViewSet(mixins.DestroyModelMixin,
                             mixins.UpdateModelMixin,
@@ -123,7 +124,7 @@ class BaseRecipeAttrViewSet(mixins.DestroyModelMixin,
         if assigned_only:
             queryset = queryset.filter(recipe__isnull=False)
 
-        return self.queryset.filter(
+        return queryset.filter(
             user=self.request.user
         ).order_by('-name').distinct()
 
